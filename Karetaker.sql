@@ -20,7 +20,7 @@ CREATE TABLE doctors (
     phone_number CHAR(10) NOT NULL,
     practicing_years INTEGER(2) NOT NULL,
     email_address VARCHAR(255) NOT NULL,
-    FOREIGN KEY (speciality_id) REFERENCES speciality(speciality_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (speciality_id) REFERENCES specialities(speciality_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE hospitals (
