@@ -22,7 +22,7 @@ CREATE TABLE doctors (
     phone_number CHAR(10) NOT NULL,
     practicing_years INTEGER(2) NOT NULL,
     email_address VARCHAR(255) NOT NULL,
-    FOREIGN KEY (speciality_id) REFERENCES speciality(speciality_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (speciality_id) REFERENCES specialities(speciality_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE hospitals (
@@ -61,7 +61,7 @@ CREATE TABLE slots (
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (hospital_id) REFERENCES hospitals(hospital_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (hospital_id) REFERENCES hospitals(hospital_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Create Appointment Table 
@@ -150,7 +150,7 @@ CREATE TABLE heart_rate_readings (
 CREATE TABLE blood_pressure_readings (
     reading_id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     user_id VARCHAR(255),
-    reading_value VARCHAR(4),
+    reading_value VARCHAR(7),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(email_address) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -178,36 +178,35 @@ CREATE TABLE blogs_has_keywords (
 
 -- Insert values for users Table
 
-INSERT INTO users VALUES ('sarthak@mail.com', 'Sarthak', 'Rohatgi', '123456789078', '9685992377', 'MALE'), 
-('salik@mail.com', 'Salik', 'Uddin', '123456734078', '7894561230', 'MALE'),
-('ssalik@mail.com', 'Salik', 'Uddin', '123456734078', '7894561230', 'MALE'), 
-('umair@mail.com', 'Umair', '', '123466734078', '9894561230', 'MALE'),  
-('Oshi@mail.com', 'Osasma', 'Binladen', '156456734078', '7894561440', 'MALE'),  
-('eeshastyles@mail.com', 'Eesha', 'Khan', '199456734078', '7944561230', 'FEMALE'), 
-('Hussaina@mail.com', 'Hussaina', 'Hssain', '123400034078', '7894000230', 'FEMALE'),  
-('bathak@mail.com', 'Bathak', 'Guleryuz', '123466634078', '7869691230', 'OTHERS'),  
-('Xediii@mail.com', 'Xedi', 'Gamer', '1235656734078', '7894929230', 'MALE'),  
-('bsdk@mail.com', 'Laura', 'Lassun', '6969696969696', '0000690000', 'OTHERS');
+INSERT INTO users VALUES ('sarthak@mail.com', 'Sarthak', 'Rohatgi', '12456789078', '968599277', 'MALE'), 
+('salik@mail.com', 'Salik', 'Uddin', '1245674078', '7894561230', 'MALE'),
+('ssalik@mail.com', 'Salik', 'Uddin', '1245674079', '7894561230', 'MALE'), 
+('umair@mail.com', 'Umair', '', '1246674076', '9894561230', 'MALE'),  
+('Oshi@mail.com', 'Osasma', 'Binladen', '15645675078', '7894561440', 'MALE'),  
+('eeshastyles@mail.com', 'Eesha', 'Khan', '19945674078', '7944561230', 'FEMALE'), 
+('Hussaina@mail.com', 'Hussaina', 'Hssain', '240004078', '7894000230', 'FEMALE'),  
+('bathak@mail.com', 'Bathak', 'Guleryuz', '4246664078', '7869691230', 'OTHERS'),  
+('Xediii@mail.com', 'Xedi', 'Gamer', '62565674078', '7894929230', 'MALE'),  
+('bsdk@mail.com', 'Laura', 'Lassun', '7969696969696', '0000690000', 'OTHERS');
 
 
---Insert values for speciality table
-
+-- Insert values for speciality table
 INSERT INTO specialities(speciality_name) VALUES('Gynecologist'),('oncologist'),('dermatologist'),('cardiologist'),('neurologist'),('General Surgeon'),('Urologist'),('endocrynologist'),('Pediatrist'),('Pschiatrist');
 
---Insert values for doctors table
+-- Insert values for doctors table
 INSERT INTO doctors VALUES('654687486','Sandeep','Maheshwari',2,'9595956666',100,'sandeep@mail.com'),
 ('654687442','Match','Udaipuri',2,'9595156666',15,'Match_udaipuri@mail.com'),
 ('654687482','Mukul','Gulati',2,'9515956666',6,'Mukul@mail.com'),
 ('654687483','Aman','Soni',2,'9595956166',2,'aman@mail.com'),
 ('654687484','Khamosh','Singh',2,'9512956666',10,'khamosh@mail.com'),
-('654687485','Sarfarosh','Chacha',2,'9595933666',16,'sarfarosh@mail.com'),
+('654687485','Sarfarosh','Chacha',2,'95959666',16,'sarfarosh@mail.com'),
 ('654687487','Milee','Maheshwari',2,'9445956666',20,'Milee@mail.com'),
 ('654687488','Emma','Watson',2,'9595556666',50,'Emma@mail.com'),
 ('654687489','Johnny','Sins',2,'9575956666',11,'18+@mail.com'),
 ('654687490','Tayyaba','Hassan',2,'9598856666',6,'Tayyaba@mail.com');
 
 
---Insert values for HOSPITALS table
+-- Insert values for HOSPITALS table
 INSERT INTO hospitals(hospital_name,email_address,phone_number,hospital_address) VALUES('Bansal Hospital','bansal@mail.com','9494945555','kolar road, Bhopal, India'),
 ('Hamidia Hospital','hamidia@mail.com','9494745555','idgah road, Bhopal, India'),
 ('Aastha Hospital','aastha@mail.com','9494945455','jhawar road, Bhopal, India'),
@@ -219,18 +218,18 @@ INSERT INTO hospitals(hospital_name,email_address,phone_number,hospital_address)
 ('Iris','iris@mail.com','0494945555','E-6 road, Bhopal, India'),
 ('National Hospital','national@mail.com','1494945555','somewhere road, Bhopal, India');
 
---Insert values for Hospitals_has_doctors table
+-- Insert values for Hospitals_has_doctors table
 
-INSERT INTO hospitals_has_doctors VALUES('654687442' , 31,'FULL TIME',500),
-('654687483' , 31,'FULL TIME',500),
-('654687482' , 31,'PART TIME',250),
-('654687482' , 32,'PART TIME',300),
-('654687484' , 32,'FULL TIME',600),
-('654687485' , 33,'PART TIME',300),
-('654687485' , 34,'PART TIME',2000),
-('654687486' , 35,'FULL TIME',5000),
-('654687487' , 35,'PART TIME',400),
-('654687488' , 36,'FULL TIME',550);
+INSERT INTO hospitals_has_doctors VALUES('654687442' , 1,'FULL TIME',500),
+('654687483' , 1,'FULL TIME',500),
+('654687482' , 1,'PART TIME',250),
+('654687482' , 2,'PART TIME',300),
+('654687484' , 2,'FULL TIME',600),
+('654687485' , 3,'PART TIME',300),
+('654687485' , 4,'PART TIME',2000),
+('654687486' , 5,'FULL TIME',5000),
+('654687487' , 5,'PART TIME',400),
+('654687488' , 6,'FULL TIME',550);
 
 -- Insert values into pills
 INSERT INTO pills(pill_name,pill_time,user_id) VALUES('Limcee','13:30','bathak@mail.com'),
@@ -246,53 +245,53 @@ INSERT INTO pills(pill_name,pill_time,user_id) VALUES('Limcee','13:30','bathak@m
 
 -- Insert into Slots Table
 INSERT INTO slots(doctor_id, hospital_id, start_time, end_time) VALUES 
-('654687486', 31, '10:00', '10:20'),
-('654687486', 31, '10:20', '10:40'),
-('654687486', 31, '10:40', '11:00'),
-('654687486', 31, '11:00', '11:20'),
-('654687486', 31, '11:20', '11:40'),
-('654687442', 32, '10:00', '10:20'),
-('654687442', 32, '10:20', '10:40'),
-('654687442', 32, '10:40', '11:00'),
-('654687442', 32, '11:00', '11:20'),
-('654687442', 32, '11:20', '11:40'),
-('654687482', 33, '10:00', '10:20'),
-('654687482', 33, '10:20', '10:40'),
-('654687482', 33, '10:40', '11:00'),
-('654687482', 33, '11:00', '11:20'),
-('654687482', 33, '11:20', '11:40'),
-('654687483', 34, '10:00', '10:20'),
-('654687483', 34, '10:20', '10:40'),
-('654687483', 34, '10:40', '11:00'),
-('654687483', 34, '11:00', '11:20'),
-('654687483', 34, '11:20', '11:40'),
-('654687484', 35, '10:00', '10:20'),
-('654687484', 35, '10:20', '10:40'),
-('654687484', 35, '10:40', '11:00'),
-('654687484', 35, '11:00', '11:20'),
-('654687484', 35, '11:20', '11:40'),
-('654687485', 36, '10:00', '10:20'),
-('654687485', 36, '10:20', '10:40'),
-('654687485', 36, '10:40', '11:00'),
-('654687485', 36, '11:00', '11:20'),
-('654687485', 36, '11:20', '11:40');
+('654687486', 1, '10:00', '10:20'),
+('654687486', 1, '10:20', '10:40'),
+('654687486', 1, '10:40', '11:00'),
+('654687486', 1, '11:00', '11:20'),
+('654687486', 1, '11:20', '11:40'),
+('654687442', 2, '10:00', '10:20'),
+('654687442', 2, '10:20', '10:40'),
+('654687442', 2, '10:40', '11:00'),
+('654687442', 2, '11:00', '11:20'),
+('654687442', 2, '11:20', '11:40'),
+('654687482', 3, '10:00', '10:20'),
+('654687482', 3, '10:20', '10:40'),
+('654687482', 3, '10:40', '11:00'),
+('654687482', 3, '11:00', '11:20'),
+('654687482', 3, '11:20', '11:40'),
+('654687483', 4, '10:00', '10:20'),
+('654687483', 4, '10:20', '10:40'),
+('654687483', 4, '10:40', '11:00'),
+('654687483', 4, '11:00', '11:20'),
+('654687483', 4, '11:20', '11:40'),
+('654687484', 5, '10:00', '10:20'),
+('654687484', 5, '10:20', '10:40'),
+('654687484', 5, '10:40', '11:00'),
+('654687484', 5, '11:00', '11:20'),
+('654687484', 5, '11:20', '11:40'),
+('654687485', 6, '10:00', '10:20'),
+('654687485', 6, '10:20', '10:40'),
+('654687485', 6, '10:40', '11:00'),
+('654687485', 6, '11:00', '11:20'),
+('654687485', 6, '11:20', '11:40');
 
 
 -- Insert into appointments table
 INSERT INTO appointments(appointment_date, user_id, doctor_id, hospital_id, slot_id, remarks) VALUES 
-('2021-05-13', 'sarthak@mail.com', '654687486', 35, 62, 'Sir I have contipation problem.'),
-('2021-05-14', 'salik@mail.com', '654687442', 31, 62, 'Sir I have loose motion problem.'),
-('2021-05-15', 'bathak@mail.com', '654687482', 32, 64, 'Sir I have fever .'),
-('2021-05-14', 'bsdk@mail.com', '654687486', 31, 70, 'Sir I have piles.');
+('2021-05-13', 'sarthak@mail.com', '654687486', 5, 2, 'Sir I have contipation problem.'),
+('2021-05-14', 'salik@mail.com', '654687442', 1, 2, 'Sir I have loose motion problem.'),
+('2021-05-15', 'bathak@mail.com', '654687482', 2, 4, 'Sir I have fever .'),
+('2021-05-14', 'bsdk@mail.com', '654687486', 1, 7, 'Sir I have piles.');
 
 -- Insert values into Rating table
 INSERT INTO ratings(user_id, doctor_id, hospital_id, rating_value) VALUES 
-('sarthak@mail.com', '654687486', 31, 4),
-('salik@mail.com', '654687442', 32, 1),
-('bsdk@mail.com', '654687482', 34, 3),
-('bathak@mail.com', '654687483', 34, 4);
+('sarthak@mail.com', '654687486', 1, 4),
+('salik@mail.com', '654687442', 2, 1),
+('bsdk@mail.com', '654687482', 4, 3),
+('bathak@mail.com', '654687483', 4, 4);
 
---Insert values into Reviews table
+-- Insert values into Reviews table
 INSERT INTO reviews(review_text, rating_id) VALUES ('Good', 1),
 ('Decent Doctor', 1),
 ('Clean Hospital and Doctor', 1);
@@ -368,7 +367,7 @@ didn’t know to ask.','umair'),
 ('Diabetes','Managing diabetes doesn’t mean never indulging in foods you enjoy, which is why you’ll find over 900 diabetes-friendly
 recipes on this blog. Diabetes Self-Management also posts about product reviews, nutrition, meal planning, and exercise, plus tools for
  counting carbs, planning workouts , and much more.','Oshi'),
-('Covid','India is a country of countries. Don’t get surprised. It is made of 28 States and 8 Union Territories, a total of 36 entities.
+('Covid','India is a country of countries. Don’t get surprised. It is made of 28 States and 8 Union Territories, a total of 6 entities.
 Each of these are different in culture, culinary, language, outfit, style of living, weather and health systems. Each one of these are
 like different countries. However, each one is tightly bonded with each other for several reasons. We truly represent ‘unity within 
 diversity’. COVID-19 has perhaps further brought all of them together to fight with this deadly disease.','Oshi');
@@ -393,3 +392,75 @@ INSERT INTO keywords VALUES('cancer'),
 ('homeopathic'),
 ('periods'),
 ('viagra');
+
+-- Insert into Blog has Keywords Table
+INSERT INTO blogs_has_keywords VALUES
+(001,'cancer'),
+(002,'cancer'),
+(003,'cancer'),
+(004,'cancer'),
+(005,'cancer'),
+(001,'pregnancy'),
+(002,'pregnancy'),
+(003,'pregnancy'),
+(004,'pregnancy'),
+(005,'pregnancy'),
+(001,'diabetes'),
+(002,'diabetes'),
+(003,'diabetes'),
+(004,'diabetes'),
+(005,'diabetes'),
+(001,'blood pressure'),
+(002,'blood pressure'),
+(003,'blood pressure'),
+(004,'blood pressure'),
+(005,'blood pressure'),
+(001,'thyroid'),
+(002,'thyroid'),
+(003,'thyroid'),
+(004,'thyroid'),
+(005,'thyroid'),
+(001,'Azithromycin'),
+(002,'Azithromycin'),
+(003,'Azithromycin'),
+(004,'Azithromycin'),
+(005,'Azithromycin');
+
+
+-- Insert into Sugar Reading Table
+INSERT INTO sugar_readings(user_id,value,type) VALUES
+('salik@mail.com','210','TYPE 1'),
+('ssalik@mail.com','140','TYPE 1'),
+('umair@mail.com','120','TYPE 1'),
+('Oshi@mail.com','125','TYPE 1'),
+('eeshastyles@mail.com','142','TYPE 1'),
+('Hussaina@mail.com','250','TYPE 3'),
+('bathak@mail.com','123','TYPE 1'),
+('Xediii@mail.com','149','TYPE 2'),
+('bsdk@mail.com','300','TYPE 1');
+
+
+-- Insert into heart rate table
+INSERT INTO heart_rate_readings(user_id,reading_value) VALUES
+('salik@mail.com','70'),
+('ssalik@mail.com','74'),
+('umair@mail.com','80'),
+('Oshi@mail.com','50'),
+('eeshastyles@mail.com','76'),
+('Hussaina@mail.com','89'),
+('bathak@mail.com','75'),
+('Xediii@mail.com','84'),
+('bsdk@mail.com','58');
+
+
+-- Insert into blood pressure table
+INSERT INTO blood_pressure_readings (user_id,reading_value) VALUES
+('salik@mail.com','120/78'),
+('ssalik@mail.com','140/90'),
+('umair@mail.com','143/85'),
+('Oshi@mail.com','13/78'),
+('eeshastyles@mail.com','130/84'),
+('Hussaina@mail.com','180/50'),
+('bathak@mail.com','95/55'),
+('Xediii@mail.com','140/98'),
+('bsdk@mail.com','122/78');
