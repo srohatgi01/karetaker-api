@@ -73,6 +73,7 @@ CREATE TABLE appointments (
     hospital_id INTEGER NOT NULL,
     slot_id INTEGER,
     remarks TEXT,
+    status ENUM('BOOKED', 'CANCELED BY USER', 'CANCELED BY DOCTOR', 'COMPLETED') DEFAULT 'BOOKED',
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(email_address) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -96,6 +97,7 @@ CREATE TABLE reviews (
     review_id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     review_text VARCHAR(255),
     rating_id INTEGER,
+    timestamp timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (rating_id) REFERENCES ratingS(rating_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -191,7 +193,17 @@ INSERT INTO users VALUES ('sarthak@mail.com', 'Sarthak', 'Rohatgi', '12456789078
 
 
 -- Insert values for speciality table
-INSERT INTO specialities(speciality_name) VALUES('Gynecologist'),('oncologist'),('dermatologist'),('cardiologist'),('neurologist'),('General Surgeon'),('Urologist'),('endocrynologist'),('Pediatrist'),('Pschiatrist');
+INSERT INTO specialities(speciality_name) VALUES
+('Gynecologist'),
+('oncologist'),
+('dermatologist'),
+('cardiologist'),
+('neurologist'),
+('General Surgeon'),
+('Urologist'),
+('endocrynologist'),
+('Pediatrist'),
+('Pschiatrist');
 
 -- Insert values for doctors table
 INSERT INTO doctors VALUES('654687486','Sandeep','Maheshwari',2,'9595956666',100,'sandeep@mail.com'),
