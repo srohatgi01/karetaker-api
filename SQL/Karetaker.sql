@@ -118,7 +118,7 @@ CREATE TABLE report_details (
     report_details_id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     report_id INTEGER,
     report_image_link varchar(255),
-    report_page_number ENUM('1', '2', '3', '4', '5', '6'),
+    report_page_number ENUM('one', 'two', 'three', 'four', 'five', 'six'),
     remark VARCHAR(255),
     FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
