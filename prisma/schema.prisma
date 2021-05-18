@@ -71,8 +71,6 @@ model doctors {
   hospitals_has_doctors hospitals_has_doctors[]
   ratings               ratings[]
   slots                 slots[]
-
-  @@index([speciality_id], name: "speciality_id")
 }
 
 model heart_rate_readings {
