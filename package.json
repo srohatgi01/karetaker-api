@@ -21,7 +21,14 @@
   },
   "homepage": "https://github.com/ll-Eywa-ll/karetaker-api#readme",
   "dependencies": {
+    "@prisma/client": "^2.22.1",
+    "body-parser": "^1.19.0",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
+    "nanoid": "^3.1.23",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "prisma": "^2.22.1"
   }
 }

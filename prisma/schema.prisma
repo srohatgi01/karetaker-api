@@ -1,0 +1,268 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model appointments {
+  appointment_id   Int                  @id @default(autoincrement())
+  appointment_date DateTime             @db.Date
+  user_id          String?              @db.VarChar(255)
+  doctor_id        String?              @db.VarChar(255)
+  hospital_id      Int
+  slot_id          Int?
+  remarks          String?              @db.Text
+  status           appointments_status? @default(BOOKED)
+  timestamp        DateTime?            @default(now()) @db.Timestamp(0)
+  doctors          doctors?             @relation(fields: [doctor_id], references: [doctor_id])
+  hospitals        hospitals            @relation(fields: [hospital_id], references: [hospital_id])
+  slots            slots?               @relation(fields: [slot_id], references: [slot_id])
+  users            users?               @relation(fields: [user_id], references: [email_address])
+
+  @@index([doctor_id], name: "doctor_id")
+  @@index([hospital_id], name: "hospital_id")
+  @@index([slot_id], name: "slot_id")
+  @@index([user_id], name: "user_id")
+}
+
+model blogs {
+  blog_id            Int                  @id @default(autoincrement())
+  title              String?              @db.VarChar(255)
+  body               String?              @db.Text
+  written_by         String?              @db.VarChar(255)
+  blogs_has_keywords blogs_has_keywords[] @ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model blogs_has_keywords {
+  blog_id      Int?
+  keyword_name String?   @db.VarChar(255)
+  blogs        blogs?    @relation(fields: [blog_id], references: [blog_id])
+  keywords     keywords? @relation(fields: [keyword_name], references: [keyword])
+
+  @@index([blog_id], name: "blog_id")
+  @@index([keyword_name], name: "keyword_name")
+  @@ignore
+}
+
+model blood_pressure_readings {
+  reading_id    Int       @id @default(autoincrement())
+  user_id       String?   @db.VarChar(255)
+  reading_value String?   @db.VarChar(7)
+  timestamp     DateTime? @default(now()) @db.Timestamp(0)
+  users         users?    @relation(fields: [user_id], references: [email_address])
+
+  @@index([user_id], name: "user_id")
+}
+
+model doctors {
+  doctor_id             String                  @id @db.VarChar(255)
+  first_name            String                  @db.VarChar(255)
+  last_name             String                  @db.VarChar(255)
+  speciality_id         Int?
+  phone_number          String                  @db.Char(10)
+  practicing_years      Int
+  email_address         String                  @db.VarChar(255)
+  specialities          specialities?           @relation(fields: [speciality_id], references: [speciality_id])
+  appointments          appointments[]
+  hospitals_has_doctors hospitals_has_doctors[]
+  ratings               ratings[]
+  slots                 slots[]
+}
+
+model heart_rate_readings {
+  reading_id    Int       @id @default(autoincrement())
+  user_id       String?   @db.VarChar(255)
+  reading_value String?   @db.VarChar(4)
+  timestamp     DateTime? @default(now()) @db.Timestamp(0)
+  users         users?    @relation(fields: [user_id], references: [email_address])
+
+  @@index([user_id], name: "user_id")
+}
+
+model hospitals {
+  hospital_id           Int                     @id @default(autoincrement())
+  hospital_name         String                  @db.VarChar(255)
+  email_address         String?                 @db.VarChar(255)
+  phone_number          String?                 @db.Char(10)
+  hospital_address      String                  @db.VarChar(255)
+  appointments          appointments[]
+  hospitals_has_doctors hospitals_has_doctors[]
+  ratings               ratings[]
+  slots                 slots[]
+}
+
+model hospitals_has_doctors {
+  doctor_id     String                               @db.VarChar(255)
+  hospital_id   Int
+  doctor_status hospitals_has_doctors_doctor_status?
+  fee           String?                              @db.VarChar(5)
+  doctors       doctors                              @relation(fields: [doctor_id], references: [doctor_id])
+  hospitals     hospitals                            @relation(fields: [hospital_id], references: [hospital_id])
+
+  @@id([doctor_id, hospital_id])
+  @@index([hospital_id], name: "hospital_id")
+}
+
+model keywords {
+  keyword            String               @id @db.VarChar(255)
+  blogs_has_keywords blogs_has_keywords[] @ignore
+}
+
+model pills {
+  pills_id  Int       @id @default(autoincrement())
+  pill_name String    @db.VarChar(255)
+  pill_time DateTime? @db.Time(0)
+  user_id   String    @db.VarChar(255)
+  users     users     @relation(fields: [user_id], references: [email_address])
+
+  @@index([user_id], name: "user_id")
+}
+
+model qr_code {
+  qr_link String  @id @db.VarChar(255)
+  user_id String? @db.VarChar(255)
+  users   users?  @relation(fields: [user_id], references: [email_address])
+
+  @@index([user_id], name: "user_id")
+}
+
+model ratings {
+  rating_id    Int       @id @default(autoincrement())
+  user_id      String    @db.VarChar(255)
+  doctor_id    String    @db.VarChar(255)
+  hospital_id  Int
+  rating_value Int?
+  doctors      doctors   @relation(fields: [doctor_id], references: [doctor_id])
+  hospitals    hospitals @relation(fields: [hospital_id], references: [hospital_id])
+  users        users     @relation(fields: [user_id], references: [email_address])
+  reviews      reviews[]
+
+  @@index([doctor_id], name: "doctor_id")
+  @@index([hospital_id], name: "hospital_id")
+  @@index([user_id], name: "user_id")
+}
+
+model report_details {
+  report_details_id  Int                                @id @default(autoincrement())
+  report_id          Int?
+  report_image_link  String?                            @db.VarChar(255)
+  report_page_number report_details_report_page_number?
+  remark             String?                            @db.VarChar(255)
+  reports            reports?                           @relation(fields: [report_id], references: [report_id])
+
+  @@index([report_id], name: "report_id")
+}
+
+model reports {
+  report_id                 Int                  @id @default(autoincrement())
+  user_id                   String?              @db.VarChar(255)
+  name_of_report            String?              @db.VarChar(255)
+  date_of_report            String?              @db.VarChar(255)
+  doctor_who_created_report String?              @db.VarChar(255)
+  show_status               reports_show_status?
+  timestamp                 DateTime             @default(now()) @db.Timestamp(0)
+  users                     users?               @relation(fields: [user_id], references: [email_address])
+  report_details            report_details[]
+
+  @@index([user_id], name: "user_id")
+}
+
+model reviews {
+  review_id   Int      @id @default(autoincrement())
+  review_text String?  @db.VarChar(255)
+  rating_id   Int?
+  timestamp   DateTime @default(now()) @db.Timestamp(0)
+  ratings     ratings? @relation(fields: [rating_id], references: [rating_id])
+
+  @@index([rating_id], name: "rating_id")
+}
+
+model slots {
+  slot_id      Int            @id @default(autoincrement())
+  doctor_id    String?        @db.VarChar(255)
+  hospital_id  Int
+  start_time   DateTime       @db.Time(0)
+  end_time     DateTime       @db.Time(0)
+  doctors      doctors?       @relation(fields: [doctor_id], references: [doctor_id])
+  hospitals    hospitals      @relation(fields: [hospital_id], references: [hospital_id])
+  appointments appointments[]
+
+  @@index([doctor_id], name: "doctor_id")
+  @@index([hospital_id], name: "hospital_id")
+}
+
+model specialities {
+  speciality_id   Int       @id @default(autoincrement())
+  speciality_name String?   @db.VarChar(255)
+  doctors         doctors[]
+}
+
+model sugar_readings {
+  reading_id Int                  @id @default(autoincrement())
+  user_id    String?              @db.VarChar(255)
+  value      String?              @db.VarChar(4)
+  type       sugar_readings_type?
+  timestamp  DateTime?            @default(now()) @db.Timestamp(0)
+  users      users?               @relation(fields: [user_id], references: [email_address])
+
+  @@index([user_id], name: "user_id")
+}
+
+model users {
+  email_address           String                    @id @db.VarChar(255)
+  first_name              String                    @db.VarChar(255)
+  last_name               String                    @db.VarChar(255)
+  uuid                    String?                   @unique @db.VarChar(255)
+  phone_number            String?                   @db.Char(10)
+  gender                  users_gender?
+  appointments            appointments[]
+  blood_pressure_readings blood_pressure_readings[]
+  heart_rate_readings     heart_rate_readings[]
+  pills                   pills[]
+  qr_code                 qr_code[]
+  ratings                 ratings[]
+  reports                 reports[]
+  sugar_readings          sugar_readings[]
+}
+
+enum appointments_status {
+  BOOKED
+  CANCELED_BY_USER @map("CANCELED BY USER")
+  CANCELED_BY_DOCTOR @map("CANCELED BY DOCTOR")
+  COMPLETED
+}
+
+enum hospitals_has_doctors_doctor_status {
+  FULL_TIME @map("FULL TIME")
+  PART_TIME @map("PART TIME")
+}
+
+enum report_details_report_page_number {
+  one
+  two
+  three
+  four
+  five
+  six
+}
+
+enum reports_show_status {
+  SHOW
+  HIDE
+}
+
+enum sugar_readings_type {
+  TYPE_1 @map("TYPE 1")
+  TYPE_2 @map("TYPE 2")
+  TYPE_3 @map("TYPE 3")
+}
+
+enum users_gender {
+  MALE
+  FEMALE
+  OTHERS
+}
