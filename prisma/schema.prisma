@@ -115,11 +115,9 @@ model keywords {
 model pills {
   pills_id  Int       @id @default(autoincrement())
   pill_name String    @db.VarChar(255)
-  pill_time DateTime? @db.Time(0)
+  pill_time String?   @db.Char(5)
   user_id   String    @db.VarChar(255)
   users     users     @relation(fields: [user_id], references: [email_address])
-
-  @@index([user_id], name: "user_id")
 }
 
 model qr_code {
@@ -185,8 +183,8 @@ model slots {
   slot_id      Int            @id @default(autoincrement())
   doctor_id    String?        @db.VarChar(255)
   hospital_id  Int
-  start_time   DateTime       @db.Time(0)
-  end_time     DateTime       @db.Time(0)
+  start_time   String?        @db.Char(5)
+  end_time     String?        @db.Char(5)
   doctors      doctors?       @relation(fields: [doctor_id], references: [doctor_id])
   hospitals    hospitals      @relation(fields: [hospital_id], references: [hospital_id])
   appointments appointments[]

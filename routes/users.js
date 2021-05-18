@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
   res.send(newUser);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/getuser/:id', async (req, res) => {
     let user = await prisma.users.findUnique({
         where: {
             email_address: req.params.id
@@ -32,5 +32,31 @@ router.get('/:id', async (req, res) => {
     })
 
     res.send(user)
+})
+
+
+//Pills Route
+router.post('/pills', async (req, res) => {
+    let newPill = await prisma.pills.create({
+      data: {
+        pill_name: req.body.pill_name,
+        pill_time: req.body.pill_time,
+        user_id: req.body.user_id
+      }
+    })
+
+    res.send(newPill)
+})
+
+router.get('/pills', async (_req, res) => {
+  res.send(await prisma.pills.findMany())
+})
+
+router.get('/pills/getpills/:id', async (req, res) => {
+  res.send(await prisma.pills.findMany({
+    where: {
+      user_id: req.params.id
+    }
+  }))
 })
 module.exports = router;
