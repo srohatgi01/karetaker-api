@@ -2,6 +2,7 @@ require('dotenv/config')
 const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
+const cors = require('cors')
 
 // Import Routes
 const usersRoute = require('./routes/users.js')
@@ -11,6 +12,7 @@ const hospitalsRoute = require('./routes/hospitals.js')
 const hospitalsHasDoctorsRoute = require('./routes/hospital_has_doctors.js')
 const appointmentsRoute = require('./routes/appointments.js')
 
+app.use(cors())
 app.use(bodyParser.json())
 
 // This is the route for users GET and POST
