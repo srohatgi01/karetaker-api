@@ -23,7 +23,7 @@ router.get("/slots", async (req, res) => {
 });
 
 router.get("/getfreeslots/:doctorId/:date", async (req, res) => {
-  conn.query(`select slot_id from slots where doctor_id='${req.params.doctorId}' and not exists (select slot_id from appointments where appointments.slot_id=slots.slot_id and appointments.doctor_id=slots.doctor_id and appointment_date='${req.params.date}' and slots.hospital_id = appointments.hospital_id);`, (err, rows, fields) => {res.send(rows)})
+  conn.query(`select start_time from slots where doctor_id='${req.params.doctorId}' and not exists (select slot_id from appointments where appointments.slot_id=slots.slot_id and appointments.doctor_id=slots.doctor_id and appointment_date='${req.params.date}');`, (_err, rows, _fields) => {res.send(rows)})
 });
 module.exports = router;
 
