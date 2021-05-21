@@ -1,10 +1,11 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
-const { get } = require("./users");
 const router = express.Router();
 const prisma = new PrismaClient();
 var conn = require('../config.js')
 
+
+//This route will take doctor's id and create a new time slot for a doctor given the hospital_id, start_time and end_time
 router.post("/createslot/:doctorId", async (req, res) => {
   let newSlot = await prisma.slots.create({
     data: {
@@ -18,13 +19,44 @@ router.post("/createslot/:doctorId", async (req, res) => {
   res.send(newSlot);
 });
 
-router.get("/slots", async (req, res) => {
+// This route will get you all the slots for all the doctors
+router.get("/slots", async (_req, res) => {
   res.send(await prisma.slots.findMany());
 });
 
-router.get("/getfreeslots/:doctorId/:date", async (req, res) => {
-  conn.query(`select start_time from slots where doctor_id='${req.params.doctorId}' and not exists (select slot_id from appointments where appointments.slot_id=slots.slot_id and appointments.doctor_id=slots.doctor_id and appointment_date='${req.params.date}');`, (_err, rows, _fields) => {res.send(rows)})
+// This route will get you all the slots for a particular doctor
+router.get("/slots/:doctorId", async (req, res) => {
+  res.send(await prisma.slots.findMany({
+    where: {
+      doctor_id: req.params.doctorId
+    }
+  }));
 });
-module.exports = router;
 
-// 
+// This route will get you all the available start time for the available slots of a particular doctor on a particular date
+router.get("/getfreeslots/:doctorId/:date", async (req, res) => {
+  conn.query(`select start_time, slot_id from slots where doctor_id='${req.params.doctorId}' and not exists (select slot_id from appointments where appointments.slot_id=slots.slot_id and appointments.doctor_id=slots.doctor_id and appointment_date='${req.params.date}');`, (_err, rows, _fields) => {res.send(rows)})
+});
+
+
+// This route will get you all the appoitnments
+router.get("/", async (req, res) => {
+  res.send(await prisma.appointments.findMany())
+})
+
+//this route will let you create a new appointment
+router.post("/", async (req, res) => {
+  let newAppointment = await prisma.appointments.create({
+    data: {
+      appointment_date: req.body.appointment_date,
+      user_id: req.body.user_id,
+      doctor_id: req.body.doctor_id,
+      hospital_id: req.body.hospital_id,
+      slot_id: req.body.slot_id,
+      remarks: req.body.remarks
+    }
+  })
+
+  res.send(newAppointment)
+})
+module.exports = router;
