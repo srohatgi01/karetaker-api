@@ -40,7 +40,7 @@ router.get("/getfreeslots/:doctorId/:date", async (req, res) => {
 
 
 // This route will get you all the appoitnments
-router.get("/", async (req, res) => {
+router.get("/", async (_req, res) => {
   res.send(await prisma.appointments.findMany())
 })
 
@@ -59,4 +59,21 @@ router.post("/", async (req, res) => {
 
   res.send(newAppointment)
 })
+
+router.post("/rating", async (req, res) => {
+  let newRating = await prisma.ratings.create({
+    data: {
+      user_id: req.body.user_id,
+      doctor_id: req.body.doctor_id,
+      hospital_id: req.body.hospital_id,
+      rating_value: req.body.rating_value
+    }
+  })
+  res.send(newRating)
+})
+
+router.get("/rating", async (_req, res) => {
+  res.send(await prisma.ratings.findMany())
+})
+
 module.exports = router;
