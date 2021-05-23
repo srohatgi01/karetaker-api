@@ -59,4 +59,30 @@ router.get('/pills/getpills/:id', async (req, res) => {
     }
   }))
 })
+
+router.get('/reports', async (_req, res) => {
+  res.send(await prisma.reports.findMany())
+})
+
+router.get('/getreportsbyuser/:userId', async (req, res) => {
+  res.send(await prisma.reports.findMany({
+    where: {
+      user_id: req.params.userId
+    }
+  }))
+})
+
+router.post('/reports', async (req, res) => {
+  let newReport = await prisma.reports.create({
+    data: {
+      user_id: req.body.user_id,
+      name_of_report: req.body.name_of_report,
+      date_of_report: req.body.date_of_report,
+      doctor_who_created_report: req.body.doctor_who_created_report,
+      show_status: req.body.show_status
+    }
+  })
+
+  res.send(newReport)
+})
 module.exports = router;

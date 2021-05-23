@@ -76,4 +76,18 @@ router.get("/rating", async (_req, res) => {
   res.send(await prisma.ratings.findMany())
 })
 
+router.get("/review", async (_req, res) => {
+  res.send(await prisma.reviews.findMany())
+})
+
+router.post("/review", async (req, res)  => {
+  let newReview = await prisma.reviews.create({
+    data: {
+      review_text: req.body.review_text,
+      rating_id: req.body.rating_id
+    }
+  })
+
+  res.send(newReview)
+})
 module.exports = router;
