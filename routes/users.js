@@ -85,4 +85,82 @@ router.post('/reports', async (req, res) => {
 
   res.send(newReport)
 })
+
+router.post('/reports/reportdetails', async (req, res) => {
+  let newReportDetails = await prisma.report_details.create({
+    data: {
+      report_id: req.body.report_id,
+      report_image_link: req.body.report_image_link,
+      report_page_number: req.body.report_page_number,
+      remark: req.body.remark
+    }
+  })
+
+  res.send(newReportDetails)
+})
+
+router.get('/reports/reportdetails', async (_req, res) => {
+  res.send(await prisma.report_details.findMany())
+})
+
+
+router.get('/qrcode', async (_req, res) => {
+  res.send(await prisma.qr_code.findMany())
+})
+
+router.post('/qrcode', async (req, res) => {
+  let newQRCode = await prisma.qr_code.create({
+    data: {
+      qr_link: req.body.qr_link,
+      user_id: req.body.user_id
+    }
+  })
+
+  res.send(newQRCode)
+})
+
+router.get('/sugar', async (_req, res) => {
+  res.send(await prisma.sugar_readings.findMany())
+})
+
+router.post('/sugar', async (req, res) => {
+  let newSugarReading = await prisma.sugar_readings.create({
+    data: {
+      user_id: req.body.user_id,
+      reading_value: req.body.reading_value
+    }
+  })
+
+  res.send(newSugarReading)
+})
+
+router.get('/bloodpressure', async (_req, res) => {
+  res.send(await prisma.blood_pressure_readings.findMany())
+})
+
+router.post('/bloodpressure', async (req, res) => {
+  let newBloodPressureReading = await prisma.blood_pressure_readings.create({
+    data: {
+      user_id: req.body.user_id,
+      reading_value: req.body.reading_value
+    }
+  })
+
+  res.send(newBloodPressureReading)
+})
+
+router.get('/heartrate', async (_req, res) => {
+  res.send(await prisma.heart_rate_readings.findMany())
+})
+
+router.post('/heartrate', async (req, res) => {
+  let newHeartRateReading = await prisma.heart_rate_readings.create({
+    data: {
+      user_id: req.body.user_id,
+      reading_value: req.body.reading_value
+    }
+  })
+
+  res.send(newHeartRateReading)
+})
 module.exports = router;
