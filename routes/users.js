@@ -9,6 +9,8 @@ router.get("/", async (_req, res) => {
   res.json(users);
 });
 
+
+// Create a new User
 router.post("/", async (req, res) => {
   let newUser = await prisma.users.create({
     data: {
@@ -31,7 +33,8 @@ router.get('/getuser/:id', async (req, res) => {
         }
     })
 
-    res.send(user)
+    if(user == null) res.sendStatus(404)
+    else res.send(user)
 })
 
 
