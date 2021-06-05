@@ -19,7 +19,8 @@ router.post("/", async (req, res) => {
       last_name: req.body.last_name,
       uuid: req.body.uuid,
       phone_number: req.body.phone_number,
-      gender: req.body.gender
+      gender: req.body.gender,
+      photo_url: req.body.photo_url
     },
   });
 
