@@ -6,7 +6,8 @@ CREATE TABLE users (
     last_name VARCHAR(255) NOT NULL,
     uuid VARCHAR(255) UNIQUE,
     phone_number CHAR(10),
-    gender ENUM('MALE', 'FEMALE', 'OTHERS')
+    gender ENUM('MALE', 'FEMALE', 'OTHERS'),
+    photo_url VARCHAR(255)
 );
 
 CREATE TABLE specialities (

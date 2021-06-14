@@ -27,9 +27,10 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
+    let doctorId = nanoid(6)
     let newDoctor = await prisma.doctors.create({
         data: {
-            doctor_id: nanoid(6),
+            doctor_id: doctorId,
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             speciality_id: req.body.speciality_id,

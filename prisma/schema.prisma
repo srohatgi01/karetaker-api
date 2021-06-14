@@ -71,6 +71,8 @@ model doctors {
   hospitals_has_doctors hospitals_has_doctors[]
   ratings               ratings[]
   slots                 slots[]
+
+  @@index([speciality_id], name: "speciality_id")
 }
 
 model heart_rate_readings {
@@ -113,11 +115,11 @@ model keywords {
 }
 
 model pills {
-  pills_id  Int       @id @default(autoincrement())
-  pill_name String    @db.VarChar(255)
-  pill_time DateTime? @db.Time(0)
-  user_id   String    @db.VarChar(255)
-  users     users     @relation(fields: [user_id], references: [email_address])
+  pills_id  Int     @id @default(autoincrement())
+  pill_name String  @db.VarChar(255)
+  pill_time String? @db.Char(5)
+  user_id   String  @db.VarChar(255)
+  users     users   @relation(fields: [user_id], references: [email_address])
 
   @@index([user_id], name: "user_id")
 }
@@ -185,8 +187,8 @@ model slots {
   slot_id      Int            @id @default(autoincrement())
   doctor_id    String?        @db.VarChar(255)
   hospital_id  Int
-  start_time   DateTime       @db.Time(0)
-  end_time     DateTime       @db.Time(0)
+  start_time   String?        @db.Char(5)
+  end_time     String?        @db.Char(5)
   doctors      doctors?       @relation(fields: [doctor_id], references: [doctor_id])
   hospitals    hospitals      @relation(fields: [hospital_id], references: [hospital_id])
   appointments appointments[]
@@ -219,6 +221,7 @@ model users {
   uuid                    String?                   @unique @db.VarChar(255)
   phone_number            String?                   @db.Char(10)
   gender                  users_gender?
+  photo_url               String?                   @db.VarChar(255)
   appointments            appointments[]
   blood_pressure_readings blood_pressure_readings[]
   heart_rate_readings     heart_rate_readings[]
