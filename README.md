@@ -28,6 +28,15 @@ The below mentioned is the base url anyone will follow. All the routes will cont
 
     > To create a new user with minimum details, you will require, ***first_name, last_name & email_address***
 
+
+### Search Route
+
+> This is the route which should be used to find doctors in the search field
+
+- This route will return all the **doctors** regarding the letters you input
+        GET http://localhost:4000/api/v1/doctors/search/:search_characters
+        
+
 <br><br><br>his is just a practice paragraph text to demonstrate how paragraph works.
 So now we have to add a line break. <br>
 This is how you do it
