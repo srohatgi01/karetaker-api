@@ -3,6 +3,7 @@ const express = require("express")
 const router = express.Router()
 const { nanoid } = require('nanoid')
 const prisma = new PrismaClient()
+var conn = require('../config.js')
 
 router.get('/', async (_req, res) => {
     let doctors = await prisma.doctors.findMany({
@@ -26,6 +27,7 @@ router.get('/:id', async (req, res) => {
     }))
 })
 
+
 router.post('/', async (req, res) => {
     let doctorId = nanoid(6)
     let newDoctor = await prisma.doctors.create({
@@ -41,6 +43,10 @@ router.post('/', async (req, res) => {
     })
     
     res.send(newDoctor)
+})
+
+router.get('/search/:search', async (req, res) => {
+    conn.query(`SELECT * from doctors where first_name LIKE '%${req.params.search}%' OR last_name LIKE '%${req.params.search}%';`, (_err, rows, _fields) => {res.send(rows)})
 })
 
 module.exports = router;
