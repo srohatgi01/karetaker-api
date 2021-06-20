@@ -34,6 +34,8 @@ The below mentioned is the base url anyone will follow. All the routes will cont
 > This is the route which should be used to find doctors in the search field
 
 - This route will return all the **doctors** regarding the letters you input
+
+
         GET http://localhost:4000/api/v1/doctors/search/:search_characters
         
 
