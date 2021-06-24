@@ -23,7 +23,9 @@ router.get("/doctorbyid/:id", async (req, res) => {
       },
       include: {
         specialities: true,
-        hospitals_has_doctors: true,
+        hospitals_has_doctors: {
+          include: { hospitals: true },
+        },
       },
     })
   );
@@ -47,7 +49,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/search/:search", async (req, res) => {
-//   conn.query(`SELECT * from doctors where first_name LIKE '%${req.params.search}%' OR last_name LIKE '%${req.params.search}%';`, (_err, rows, _fields) => {res.send(rows)})
+  //   conn.query(`SELECT * from doctors where first_name LIKE '%${req.params.search}%' OR last_name LIKE '%${req.params.search}%';`, (_err, rows, _fields) => {res.send(rows)})
 
   res.send(
     await prisma.doctors.findMany({
@@ -67,12 +69,12 @@ router.get("/search/:search", async (req, res) => {
         ],
       },
       select: {
-          doctor_id: true,
-          first_name: true,
-          last_name: true, 
-          practicing_years: true,
-          specialities: true
-      }
+        doctor_id: true,
+        first_name: true,
+        last_name: true,
+        practicing_years: true,
+        specialities: true,
+      },
     })
   );
 });
