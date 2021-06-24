@@ -29,6 +29,8 @@ The below mentioned is the base url anyone will follow. All the routes will cont
     > To create a new user with minimum details, you will require, ***first_name, last_name & email_address***
 
 
+<br>
+
 ### Search Route
 
 > This is the route which should be used to find doctors in the search field
@@ -39,43 +41,13 @@ The below mentioned is the base url anyone will follow. All the routes will cont
         GET http://localhost:4000/api/v1/doctors/search/:search_characters
         
 
-<br><br><br>his is just a practice paragraph text to demonstrate how paragraph works.
-So now we have to add a line break. <br>
-This is how you do it
-<br>
-<br>
-This is a **bold** text
-<br>
-This is a *italic* text
-<br>
-This is ***bold-italic*** text
-<br>
-> This is some quote lol
->
-> # This is some Heading quote lol.
->
-> ## This is subheading quote lolol.
-<br>
+### Doctor Profile Route
 
-## Now time for some Ordered lists
-1. This is the first list item in ordered list
-2. This is second item in ordered list
+> This is the route which should be used after using the search route to get all the details for the specific doctor using doctor's id.
 
-## Now let's talk about Un-Ordered lists
-- This is an unordered list
-    - This is nested unordered list
-        - This nested-nested unorderd list
+- This route will return all the details of a specific doctor
 
-## Noice, Let's type some code now!
-`some code`
-```
-#include <stdio.h>
 
-using namespace std;
+        GET http://localhost:4000/api/v1/doctors/doctorbyid/:id
+        
 
-int main() {
-    printf("Hello World");
-
-    return 0;
-}
-```
