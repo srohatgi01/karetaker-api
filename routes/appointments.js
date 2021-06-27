@@ -44,6 +44,16 @@ router.get("/", async (_req, res) => {
   res.send(await prisma.appointments.findMany())
 })
 
+router.get("/appointmentbyid/:userId", async (_req, res) => {
+  res.send(await prisma.appointments.findMany(
+    {
+      where: {
+        user_id: _req.params.userId
+      }
+    }
+  ))
+})
+
 //this route will let you create a new appointment
 router.post("/", async (req, res) => {
   let newAppointment = await prisma.appointments.create({
