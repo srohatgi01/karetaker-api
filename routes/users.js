@@ -66,9 +66,18 @@ router.get("/pills/getpills/:id", async (req, res) => {
   );
 });
 
+
+
+
+
+
+// User medical reports
+
+
 router.get("/reports", async (_req, res) => {
   res.send(await prisma.reports.findMany());
 });
+
 
 router.get("/getreportsbyuser/:userId", async (req, res) => {
   res.send(
@@ -126,17 +135,26 @@ router.post("/qrcode", async (req, res) => {
   res.send(newQRCode);
 });
 
+
+
+
+// Readings 
+
+
+
 router.get("/sugar", async (_req, res) => {
   res.send(await prisma.sugar_readings.findMany());
 });
 
 
-// Get lastest Sugar Reading
+// Get the lastest Sugar Reading
 router.get("/sugar/latest/:userId", async (_req, res) => {
 
   conn.query(`select * from sugar_readings where user_id = "${_req.params.userId}" ORDER BY reading_id DESC LIMIT 0, 1;`, (_err, rows, _fields) => {res.send(rows[0])})
 });
 
+
+//create new sugar reading
 router.post("/sugar", async (req, res) => {
   let newSugarReading = await prisma.sugar_readings.create({
     data: {
@@ -148,7 +166,19 @@ router.post("/sugar", async (req, res) => {
   res.send(newSugarReading);
 });
 
+//get sugar readings for a specific user
+router.get("/sugar/sugarbyid/:userId", async (req, res) => {
+  res.send(await prisma.sugar_readings.findMany({
+    where: {
+      user_id: req.params.userId,
+    }
+  }))
+})
+
+
+
 // Blood Pressure
+
 router.get("/bloodpressure", async (_req, res) => {
   res.send(await prisma.blood_pressure_readings.findMany());
 });
@@ -170,6 +200,14 @@ router.post("/bloodpressure", async (req, res) => {
   res.send(newBloodPressureReading);
 });
 
+//get blood pressure readings for a specific user
+router.get("/bloodpressure/bloodpressurebyid/:userId", async (req, res) => {
+  res.send(await prisma.blood_pressure_readings.findMany({
+    where: {
+      user_id: req.params.userId,
+    }
+  }))
+})
 
 // Heart Rate
 router.get("/heartrate", async (_req, res) => {
@@ -192,4 +230,15 @@ router.post("/heartrate", async (req, res) => {
 
   res.send(newHeartRateReading);
 });
+
+//get heart rate readings for a specific user
+router.get("/heart/heartbyid/:userId", async (req, res) => {
+  res.send(await prisma.heart_rate_readings.findMany({
+    where: {
+      user_id: req.params.userId,
+    }
+  }))
+})
+
+
 module.exports = router;
