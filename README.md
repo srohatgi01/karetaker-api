@@ -51,3 +51,49 @@ The below mentioned is the base url anyone will follow. All the routes will cont
         GET http://localhost:4000/api/v1/doctors/doctorbyid/:id
         
 
+### Health Stats Routes
+
+> This is the route which should be used to get the readings of health stats.
+
+- This route will return all the sugar readings for the given user
+
+
+        GET http://localhost:4000/api/v1/users/sugar/sugarbyid/:id
+
+        
+- This route will return all the heart rate readings for the given user
+
+
+        GET http://localhost:4000/api/v1/users/bloodpressure/bloodpressurebyid/:id
+
+
+- This route will return all the blood pressure readings for the given user
+
+
+        GET http://localhost:4000/api/v1/users/heart/heartbyid/:id
+
+        
+- This route will return the latest sugar reading of a particular user
+
+
+        GET http://localhost:4000/api/v1/users/sugar/latest/:id
+
+- This route will return the latest blood pressure reading of a particular user
+
+
+        GET http://localhost:4000/api/v1/users/bloodpressure/latest/:id
+
+- This route will return the latest heart rate reading of a particular user
+
+
+        GET http://localhost:4000/api/v1/users/heart/latest/:id
+         
+### Appointment Routes
+
+> These routes should be used to do all appointment related stuff.
+
+- This route will return all the appointments for a given user
+
+
+        GET http://localhost:4000/api/v1/appointments/appointmentbyid/:id
+        
