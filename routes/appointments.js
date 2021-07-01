@@ -56,7 +56,11 @@ router.get("/appointmentbyid/:userId", async (_req, res) => {
       where: {
         user_id: _req.params.userId,
       },
+      orderBy: {
+        appointment_date: 'desc',
+      },
       select: {
+        appointment_id: true,
         appointment_date: true,
         status: true,
         slots: {
