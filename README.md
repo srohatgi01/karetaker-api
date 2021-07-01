@@ -97,3 +97,8 @@ The below mentioned is the base url anyone will follow. All the routes will cont
 
         GET http://localhost:4000/api/v1/appointments/appointmentbyid/:id
         
+- This route will update the status of the given appointment
+
+
+        PATCH http://localhost:4000/api/v1/appointments/appointmentbyid/:id
+        
