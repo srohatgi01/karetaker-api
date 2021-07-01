@@ -85,6 +85,17 @@ router.get("/appointmentbyid/:userId", async (_req, res) => {
   );
 });
 
+router.patch('/appointmentbyid/:appointmentId', async (req, res) => {
+  res.send(await prisma.appointments.update({
+    where: {
+      appointment_id: parseInt(req.params.appointmentId),
+    },
+    data: {
+      status: req.body.status
+    }
+  }))
+})
+
 //this route will let you create a new appointment
 router.post("/", async (req, res) => {
   let newAppointment = await prisma.appointments.create({

@@ -7,7 +7,11 @@ CREATE TABLE users (
     uuid VARCHAR(255) UNIQUE,
     phone_number CHAR(10),
     gender ENUM('MALE', 'FEMALE', 'OTHERS'),
-    photo_url VARCHAR(255)
+    photo_url VARCHAR(255),
+    blood_group ENUM('A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'),
+    age INTEGER,
+    body_height FLOAT,
+    body_weight FLOAT 
 );
 
 CREATE TABLE specialities (
@@ -173,7 +177,8 @@ CREATE TABLE blogs_has_keywords (
     blog_id INTEGER,
     keyword_name VARCHAR(255),
     FOREIGN KEY (blog_id) REFERENCES blogs(blog_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (keyword_name) REFERENCES keywords(keyword) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (keyword_name) REFERENCES keywords(keyword) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY (blog_id, keyword_name)
 );
 
 
