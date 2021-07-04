@@ -101,4 +101,14 @@ The below mentioned is the base url anyone will follow. All the routes will cont
 
 
         PATCH http://localhost:4000/api/v1/appointments/appointmentbyid/:id
+
+### Report Routes
+
+> These routes should be used to do all reports related stuff.
+
+- This route will return all the reports for that specific user
+
+
+        GET http://localhost:4000/api/v1/users/reports/getreportsbyuser/:id
+        
         
