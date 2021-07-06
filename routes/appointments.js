@@ -49,6 +49,7 @@ router.get("/", async (_req, res) => {
   res.send(await prisma.appointments.findMany());
 });
 
+// get all the appointments of a particular user
 router.get("/appointmentbyid/:userId", async (_req, res) => {
   res.send(
     await prisma.appointments.findMany({
@@ -57,7 +58,7 @@ router.get("/appointmentbyid/:userId", async (_req, res) => {
         user_id: _req.params.userId,
       },
       orderBy: {
-        appointment_date: 'desc',
+        appointment_id: 'desc',
       },
       select: {
         appointment_id: true,

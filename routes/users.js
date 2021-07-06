@@ -1,10 +1,22 @@
+//imports
 const express = require("express");
 const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
 var conn = require('../config.js')
 
+//to implement file upload
+const multer = require('multer')
+
+//to tamper with file paths
+const path = require('path')
+
+
+// Init
 const prisma = new PrismaClient();
 
+
+// ------------ ADMIN --------------
+// This route will give a list of all the users present in the database
 router.get("/", async (_req, res) => {
   let users = await prisma.users.findMany();
   res.json(users);
@@ -74,12 +86,14 @@ router.get("/pills/getpills/:id", async (req, res) => {
 // User medical reports
 
 
+// --------------- ADMIN -------------
+// this will get all reports of all the users
 router.get("/reports", async (_req, res) => {
   res.send(await prisma.reports.findMany());
 });
 
 
-router.get("/getreportsbyuser/:userId", async (req, res) => {
+router.get("/reports/getreportsbyuser/:userId", async (req, res) => {
   res.send(
     await prisma.reports.findMany({
       where: {
@@ -138,10 +152,10 @@ router.post("/qrcode", async (req, res) => {
 
 
 
-// Readings 
+// Health Stats Readings 
 
 
-
+// ------------- ADMIN ---------------
 router.get("/sugar", async (_req, res) => {
   res.send(await prisma.sugar_readings.findMany());
 });
@@ -159,7 +173,8 @@ router.post("/sugar", async (req, res) => {
   let newSugarReading = await prisma.sugar_readings.create({
     data: {
       user_id: req.body.user_id,
-      reading_value: req.body.reading_value,
+      value: req.body.value,
+      type: "TYPE_1"
     },
   });
 
@@ -220,6 +235,7 @@ router.get("/heart/latest/:userId", async (_req, res) => {
   conn.query(`select * from heart_rate_readings where user_id = "${_req.params.userId}" ORDER BY reading_id DESC LIMIT 0, 1;`, (_err, rows, _fields) => {res.send(rows[0])})
 });
 
+// Create new heart rate reading
 router.post("/heartrate", async (req, res) => {
   let newHeartRateReading = await prisma.heart_rate_readings.create({
     data: {

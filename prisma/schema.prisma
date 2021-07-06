@@ -237,8 +237,8 @@ model users {
 
 enum appointments_status {
   BOOKED
-  CANCELED_BY_USER @map("CANCELED BY USER")
-  CANCELED_BY_DOCTOR @map("CANCELED BY DOCTOR")
+  CANCELED_BY_USER
+  CANCELED_BY_DOCTOR
   COMPLETED
 }
 
