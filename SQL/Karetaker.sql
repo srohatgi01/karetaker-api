@@ -8,7 +8,7 @@ CREATE TABLE users (
     phone_number CHAR(10),
     gender ENUM('MALE', 'FEMALE', 'OTHERS'),
     photo_url VARCHAR(255),
-    blood_group ENUM('A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'),
+    blood_group ENUM('A_POS','A_NEG','B_POS','B_NEG','O_POS','O_NEG','AB_POS','AB_NEG'),
     age INTEGER,
     body_height FLOAT,
     body_weight FLOAT 
