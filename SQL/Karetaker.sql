@@ -123,7 +123,6 @@ CREATE TABLE report_details (
     report_details_id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     report_id INTEGER,
     report_image_link varchar(255),
-    report_page_number ENUM('one', 'two', 'three', 'four', 'five', 'six'),
     remark VARCHAR(255),
     FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -174,11 +173,11 @@ CREATE TABLE keywords (
 );
 
 CREATE TABLE blogs_has_keywords (
+    blogs_has_keywords_id INT PRIMARY KEY AUTO_INCREMENT,
     blog_id INTEGER,
     keyword_name VARCHAR(255),
     FOREIGN KEY (blog_id) REFERENCES blogs(blog_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (keyword_name) REFERENCES keywords(keyword) ON DELETE CASCADE ON UPDATE CASCADE,
-    PRIMARY KEY (blog_id, keyword_name)
+    FOREIGN KEY (keyword_name) REFERENCES keywords(keyword) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
