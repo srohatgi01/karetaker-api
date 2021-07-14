@@ -92,7 +92,7 @@ router.get("/reports", async (_req, res) => {
   res.send(await prisma.reports.findMany());
 });
 
-
+// this will get all the reports for the particular user
 router.get("/reports/getreportsbyuser/:userId", async (req, res) => {
   res.send(
     await prisma.reports.findMany({
@@ -103,6 +103,7 @@ router.get("/reports/getreportsbyuser/:userId", async (req, res) => {
   );
 });
 
+// to create a new user report
 router.post("/reports", async (req, res) => {
   let newReport = await prisma.reports.create({
     data: {
@@ -117,12 +118,14 @@ router.post("/reports", async (req, res) => {
   res.send(newReport);
 });
 
+
+//* Reports details
+// to create a new report detail for a report
 router.post("/reports/reportdetails", async (req, res) => {
   let newReportDetails = await prisma.report_details.create({
     data: {
       report_id: req.body.report_id,
       report_image_link: req.body.report_image_link,
-      report_page_number: req.body.report_page_number,
       remark: req.body.remark,
     },
   });
@@ -130,10 +133,19 @@ router.post("/reports/reportdetails", async (req, res) => {
   res.send(newReportDetails);
 });
 
-router.get("/reports/reportdetails", async (_req, res) => {
-  res.send(await prisma.report_details.findMany());
+// To get the report details of a particular report
+router.get("/reports/reportdetails/:reportId", async (_req, res) => {
+  res.send(await prisma.report_details.findMany(
+    {
+      where: {
+        report_id: parseInt(_req.params.reportId)
+      }
+    }
+  ));
 });
 
+
+//* QR Code
 router.get("/qrcode", async (_req, res) => {
   res.send(await prisma.qr_code.findMany());
 });

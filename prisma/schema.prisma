@@ -148,12 +148,11 @@ model ratings {
 }
 
 model report_details {
-  report_details_id  Int                                @id @default(autoincrement())
-  report_id          Int?
-  report_image_link  String?                            @db.VarChar(255)
-  report_page_number report_details_report_page_number?
-  remark             String?                            @db.VarChar(255)
-  reports            reports?                           @relation(fields: [report_id], references: [report_id])
+  report_details_id Int      @id @default(autoincrement())
+  report_id         Int?
+  report_image_link String?  @db.VarChar(255)
+  remark            String?  @db.VarChar(255)
+  reports           reports? @relation(fields: [report_id], references: [report_id])
 
   @@index([report_id], name: "report_id")
 }
@@ -245,15 +244,6 @@ enum appointments_status {
 enum hospitals_has_doctors_doctor_status {
   FULL_TIME @map("FULL TIME")
   PART_TIME @map("PART TIME")
-}
-
-enum report_details_report_page_number {
-  one
-  two
-  three
-  four
-  five
-  six
 }
 
 enum reports_show_status {
