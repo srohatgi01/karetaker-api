@@ -17,6 +17,7 @@ const blogsRoute = require("./routes/blogs.js");
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/api/v1/uploads", express.static('uploads/'))
 
 // This is the route for users GET and POST
 app.use("/api/v1/users", usersRoute);
