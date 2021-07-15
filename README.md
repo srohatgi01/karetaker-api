@@ -110,5 +110,23 @@ The below mentioned is the base url anyone will follow. All the routes will cont
 
 
         GET http://localhost:4000/api/v1/users/reports/getreportsbyuser/:id
+
+- This route should be used to create a new report detail entry for a particular report. The body should be form-data. The field name for the file upload should be 'reportDetails'
+
+
+        POST http://localhost:4000/api/v1/users/reports/reportdetails
+                
+
+### QR Code Routes
+
+> This route shall be used to create/ retrive QR Code for a user.
+
+- This route will create the qr code for the given user. It accepts user_id as an input in body.
+
+
+        POST http://localhost:4000/api/v1/users/qrcode
         
-        
+- This route will return the qr code for a particular user.
+
+
+        GET http://localhost:4000/api/v1/users/qrcode/:id
