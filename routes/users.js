@@ -7,6 +7,8 @@ var conn = require('../config.js')
 //to implement file upload
 const multer = require('multer')
 
+const QRCode = require('qrcode')
+
 
 
 
@@ -177,14 +179,29 @@ router.get("/reports/reportdetails/:reportId", async (_req, res) => {
 
 
 //* QR Code
-router.get("/qrcode", async (_req, res) => {
-  res.send(await prisma.qr_code.findMany());
+
+//! GET
+router.get("/qrcode/:id", async (req, res) => {
+  let qrcode = await prisma.qr_code.findFirst({
+    where: {
+      user_id: req.params.id,
+    },
+    select: {
+      qr_link: true
+    }
+  });
+
+   res.send(qrcode);
 });
 
+//! POST
 router.post("/qrcode", async (req, res) => {
+  var uri = `/uploads/qrcode/${req.body.user_id.split('@')[0]}-${Date.now()}.png`;
+  await QRCode.toFile(`.${uri}`, `localhost:4000/api/v1/users/getuser/${req.body.user_id}`);
+
   let newQRCode = await prisma.qr_code.create({
     data: {
-      qr_link: req.body.qr_link,
+      qr_link: uri,
       user_id: req.body.user_id,
     },
   });
